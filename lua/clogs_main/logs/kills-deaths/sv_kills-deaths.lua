@@ -1,0 +1,23 @@
+util.AddNetworkString("clogs_killsdeaths")
+
+hook.Add("PlayerDeath", "clogs_DeathLogging", function(vic, wep, attac)
+    local time = os.date("%H:%M:%S") -- Get the current time
+    local AttackerName = attac:Name()
+    local AttackerSteam64 = attac:SteamID64()
+    local AttackerTeam = team.GetName(attac:Team())
+    local VictimName = vic:Name()
+    local VictimSteam64 = vic:SteamID64()
+    local VictimTeam = team.GetName(vic:Team())
+    local WeaponName = wep:GetClass()
+
+    net.Start("clogs_killsdeaths")
+        net.WriteString(time)
+        net.WriteString(AttackerName)
+        net.WriteString(AttackerSteam64)
+        net.WriteString(AttackerTeam)
+        net.WriteString(VictimName)
+        net.WriteString(VictimSteam64)
+        net.WriteString(VictimTeam)
+        net.WriteString(WeaponName)
+    net.Broadcast()
+end)
